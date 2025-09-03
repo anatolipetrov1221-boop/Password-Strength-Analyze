@@ -5,8 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Password Strength Analyzer</title>
+    <!-- Използваме Tailwind CSS за бързо стилизиране -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome за икони -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Празна favicon, за да няма 404 грешка -->
+    <link rel="icon" href="data:image/x-icon;base64,AAABAAEAEBAQAAIABwA4AQAAFgAAACgAAAAQAAAAIAAAAAEAGAAAAAAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////">
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -157,14 +161,6 @@
 
         /* Cookie Modal Styles */
         .cookie-modal {
-            opacity: 1;
-            transition: opacity 0.3s ease;
-        }
-        .cookie-modal.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-        .cookie-modal {
             position: fixed;
             inset: 0;
             background: rgba(0, 0, 0, 0.8);
@@ -206,7 +202,6 @@
             border-radius: 4px;
             font-weight: 600;
             cursor: pointer;
-            float: right;
         }
         .cookie-modal button:hover {
             background: #66d9b1;
@@ -215,7 +210,7 @@
 </head>
 <body>
 
-<!-- Main App -->
+<!-- Основен интерфейс -->
 <div class="vscode-window">
     <div class="title-bar">Password Strength Analyzer</div>
     <div class="main-content">
@@ -260,7 +255,7 @@
     </div>
 </div>
 
-<!-- Cookie Modal -->
+<!-- Центриран модал за бисквитки -->
 <div id="cookieBanner" class="cookie-modal">
     <div class="cookie-modal-content">
         <h3>🍪 We Use Cookies</h3>
@@ -269,11 +264,21 @@
             <a href="privacy.html" target="_blank">Privacy Policy</a>.
         </p>
         <button onclick="acceptCookies()">Accept</button>
-        <div style="clear: both;"></div>
     </div>
 </div>
 
 <script>
+    // Глобална функция за приемане на бисквитки
+    function acceptCookies() {
+        console.log("✅ Accept clicked. Hiding banner and saving to localStorage.");
+        const banner = document.getElementById('cookieBanner');
+        if (banner) {
+            banner.style.display = 'none';
+            localStorage.setItem('cookiesAccepted', 'true');
+        }
+    }
+
+    // Проверка при зареждане
     document.addEventListener('DOMContentLoaded', function() {
         const passwordInput = document.getElementById('passwordInput');
         const toggleVisibility = document.getElementById('toggleVisibility');
@@ -285,20 +290,20 @@
 
         let isVisible = false;
 
-        // Toggle password visibility
-        toggleVisibility.addEventListener('click', function() {
+        // Показване/скриване на паролата
+        toggleVisibility?.addEventListener('click', function() {
             isVisible = !isVisible;
             passwordInput.type = isVisible ? 'text' : 'password';
             toggleVisibility.innerHTML = isVisible ? '<i class="fas fa-eye-slash"></i>' : '<i class="fas fa-eye"></i>';
         });
 
-        // Analyze password on input
-        passwordInput.addEventListener('input', function() {
+        // Анализ при въвеждане
+        passwordInput?.addEventListener('input', function() {
             analyzePassword(passwordInput.value);
         });
 
-        // Generate strong password
-        generatePasswordBtn.addEventListener('click', function() {
+        // Генериране на парола
+        generatePasswordBtn?.addEventListener('click', function() {
             const strongPassword = generateVeryStrongPassword();
             passwordInput.value = strongPassword;
             passwordInput.type = 'text';
@@ -308,7 +313,7 @@
             updateFeedback(strongPassword);
         });
 
-        // Analyze password strength
+        // Функции за анализ
         function analyzePassword(password) {
             const strength = calculatePasswordStrength(password);
             updateStrengthIndicator(strength);
@@ -345,7 +350,7 @@
             feedbackItems[1].className = /[A-Z]/.test(password) ? 'feedback-item valid' : 'feedback-item invalid';
             feedbackItems[2].className = /[0-9]/.test(password) ? 'feedback-item valid' : 'feedback-item invalid';
             feedbackItems[3].className = /[^A-Za-z0-9]/.test(password) ? 'feedback-item valid' : 'feedback-item invalid';
-            const commonPasswords = ['password', '123456', 'qwerty', 'letmein', 'welcome', 'admin', '123456789', '12345678', '1234', '111111'];
+            const commonPasswords = ['password', '123456', 'qwerty', 'letmein', 'welcome', 'admin', '123456789'];
             feedbackItems[4].className = !commonPasswords.includes(password.toLowerCase()) ? 'feedback-item valid' : 'feedback-item invalid';
         }
 
@@ -366,18 +371,13 @@
             return password.split('').sort(() => 0.5 - Math.random()).join('');
         }
 
-        // Cookie Modal
-        function acceptCookies() {
-            document.getElementById('cookieBanner').classList.add('hidden');
-            localStorage.setItem('cookiesAccepted', 'true');
-        }
-
-        // Check if user already accepted cookies
+        // Проверка дали потребителят вече е приел бисквитките
         if (localStorage.getItem('cookiesAccepted') === 'true') {
-            document.getElementById('cookieBanner').classList.add('hidden');
+            document.getElementById('cookieBanner').style.display = 'none';
         }
 
-        passwordInput.focus();
+        // Фокус на полето
+        passwordInput?.focus();
     });
 </script>
 
