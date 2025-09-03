@@ -1,164 +1,221 @@
 <!DOCTYPE html>
-<html lang="bg">
+<html lang="en">
 <head>
     <meta name="google-site-verification" content="MhSFLXWvsBQHTk_qgANoLEgSr6qkIlddMofIQW67XdI" />
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Password Strength Analyzer</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #1e1e1e;
-    color: #ccc;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-.vscode-window {
-    background: #252526;
-    border-radius: 8px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-    overflow: hidden;
-    width: 500px;
-}
-.title-bar {
-    background: #2d2d30;
-    padding: 12px 20px;
-    font-size: 13px;
-    color: #969696;
-}
-.main-content {
-    padding: 30px;
-}
-.header-text {
-    font-size: 20px;
-    font-weight: bold;
-    color: #4ec9b0;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-.header-text .lock-icon {
-    /* Статичен катинар */
-}
-.sub-text {
-    font-size: 14px;
-    color: #969696;
-    margin-bottom: 20px;
-}
-.password-input-container {
-    position: relative;
-}
-.password-input {
-    width: 100%;
-    padding: 15px;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid #3e3e42;
-    border-radius: 4px;
-    color: #ccc;
-    font-size: 16px;
-    font-family: 'Consolas', 'Monaco', monospace;
-}
-.password-input:focus {
-    outline: none;
-    border-color: #007acc;
-    box-shadow: 0 0 0 2px rgba(0,122,204,0.2);
-}
-.toggle-visibility {
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    color: #969696;
-    cursor: pointer;
-    font-size: 16px;
-}
-.strength-meter {
-    margin-top: 20px;
-}
-.meter-bar {
-    height: 8px;
-    background: rgba(255,255,255,0.1);
-    border-radius: 4px;
-    overflow: hidden;
-    margin-bottom: 10px;
-}
-.meter-fill {
-    height: 100%;
-    width: 0%;
-    border-radius: 4px;
-    transition: width 0.5s ease, background 0.5s ease;
-}
-.strength-text {
-    font-size: 14px;
-    color: #969696;
-    display: flex;
-    justify-content: space-between;
-}
-.password-feedback {
-    background: rgba(255,255,255,0.05);
-    border-radius: 6px;
-    padding: 20px;
-    margin-top: 20px;
-}
-.feedback-title {
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 15px;
-    color: #007acc;
-}
-.feedback-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-.feedback-item {
-    padding: 8px 0;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 14px;
-}
-.feedback-item i {
-    width: 16px;
-    text-align: center;
-}
-.feedback-item.valid { color: #4ec9b0; }
-.feedback-item.invalid { color: #f44747; }
-.copy-btn {
-    background: #007acc;
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 500;
-    transition: all 0.2s ease;
-    margin-top: 20px;
-}
-.copy-btn:hover { background: #0062a3; }
-.password-suggestion {
-    background: rgba(78, 201, 176, 0.1);
-    border: 1px solid #4ec9b0;
-    border-radius: 4px;
-    padding: 15px;
-    margin-top: 20px;
-    font-size: 14px;
-    color: #4ec9b0;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Strength Analyzer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1e1e1e;
+            color: #ccc;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .vscode-window {
+            background: #252526;
+            border-radius: 8px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+            width: 500px;
+        }
+        .title-bar {
+            background: #2d2d30;
+            padding: 12px 20px;
+            font-size: 13px;
+            color: #969696;
+        }
+        .main-content {
+            padding: 30px;
+        }
+        .header-text {
+            font-size: 20px;
+            font-weight: bold;
+            color: #4ec9b0;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .sub-text {
+            font-size: 14px;
+            color: #969696;
+            margin-bottom: 20px;
+        }
+        .password-input-container {
+            position: relative;
+        }
+        .password-input {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid #3e3e42;
+            border-radius: 4px;
+            color: #ccc;
+            font-size: 16px;
+            font-family: 'Consolas', 'Monaco', monospace;
+        }
+        .password-input:focus {
+            outline: none;
+            border-color: #007acc;
+            box-shadow: 0 0 0 2px rgba(0,122,204,0.2);
+        }
+        .toggle-visibility {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #969696;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .strength-meter {
+            margin-top: 20px;
+        }
+        .meter-bar {
+            height: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        .meter-fill {
+            height: 100%;
+            width: 0%;
+            border-radius: 4px;
+            transition: width 0.5s ease, background 0.5s ease;
+        }
+        .strength-text {
+            font-size: 14px;
+            color: #969696;
+            display: flex;
+            justify-content: space-between;
+        }
+        .password-feedback {
+            background: rgba(255,255,255,0.05);
+            border-radius: 6px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .feedback-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #007acc;
+        }
+        .feedback-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .feedback-item {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+        .feedback-item i {
+            width: 16px;
+            text-align: center;
+        }
+        .feedback-item.valid { color: #4ec9b0; }
+        .feedback-item.invalid { color: #f44747; }
+        .copy-btn {
+            background: #007acc;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            margin-top: 20px;
+        }
+        .copy-btn:hover { background: #0062a3; }
+        .password-suggestion {
+            background: rgba(78, 201, 176, 0.1);
+            border: 1px solid #4ec9b0;
+            border-radius: 4px;
+            padding: 15px;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #4ec9b0;
+        }
+        .hidden { display: none; }
+
+        /* Cookie Modal Styles */
+        .cookie-modal {
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+        .cookie-modal.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .cookie-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            padding: 20px;
+        }
+        .cookie-modal-content {
+            background: #252526;
+            border: 1px solid #3e3e42;
+            border-radius: 8px;
+            padding: 24px;
+            max-width: 400px;
+            width: 100%;
+            color: white;
+            font-size: 14px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .cookie-modal h3 {
+            margin: 0 0 12px 0;
+            font-size: 18px;
+            color: #4ec9b0;
+        }
+        .cookie-modal p {
+            margin: 0 0 16px 0;
+            line-height: 1.5;
+        }
+        .cookie-modal a {
+            color: #4ec9b0;
+            text-decoration: underline;
+        }
+        .cookie-modal button {
+            background: #4ec9b0;
+            color: black;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            float: right;
+        }
+        .cookie-modal button:hover {
+            background: #66d9b1;
+        }
+    </style>
 </head>
 <body>
+
+<!-- Main App -->
 <div class="vscode-window">
     <div class="title-bar">Password Strength Analyzer</div>
     <div class="main-content">
@@ -203,101 +260,126 @@ body {
     </div>
 </div>
 
+<!-- Cookie Modal -->
+<div id="cookieBanner" class="cookie-modal">
+    <div class="cookie-modal-content">
+        <h3>🍪 We Use Cookies</h3>
+        <p>
+            This site uses cookies to enhance your experience. By continuing to use this site, you accept our 
+            <a href="privacy.html" target="_blank">Privacy Policy</a>.
+        </p>
+        <button onclick="acceptCookies()">Accept</button>
+        <div style="clear: both;"></div>
+    </div>
+</div>
+
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const passwordInput = document.getElementById('passwordInput');
-    const toggleVisibility = document.getElementById('toggleVisibility');
-    const strengthBar = document.getElementById('strengthBar');
-    const strengthValue = document.getElementById('strengthValue');
-    const feedbackList = document.getElementById('feedbackList');
-    const generatePasswordBtn = document.getElementById('generatePassword');
-    const passwordSuggestion = document.getElementById('passwordSuggestion');
+    document.addEventListener('DOMContentLoaded', function() {
+        const passwordInput = document.getElementById('passwordInput');
+        const toggleVisibility = document.getElementById('toggleVisibility');
+        const strengthBar = document.getElementById('strengthBar');
+        const strengthValue = document.getElementById('strengthValue');
+        const feedbackList = document.getElementById('feedbackList');
+        const generatePasswordBtn = document.getElementById('generatePassword');
+        const passwordSuggestion = document.getElementById('passwordSuggestion');
 
-    let isVisible = false;
+        let isVisible = false;
 
-    toggleVisibility.addEventListener('click', function() {
-        isVisible = !isVisible;
-        passwordInput.type = isVisible ? 'text' : 'password';
-        toggleVisibility.innerHTML = isVisible ? '<i class="fas fa-eye-slash"></i>' : '<i class="fas fa-eye"></i>';
-    });
+        // Toggle password visibility
+        toggleVisibility.addEventListener('click', function() {
+            isVisible = !isVisible;
+            passwordInput.type = isVisible ? 'text' : 'password';
+            toggleVisibility.innerHTML = isVisible ? '<i class="fas fa-eye-slash"></i>' : '<i class="fas fa-eye"></i>';
+        });
 
-    passwordInput.addEventListener('input', function() {
-        analyzePassword(passwordInput.value);
-    });
+        // Analyze password on input
+        passwordInput.addEventListener('input', function() {
+            analyzePassword(passwordInput.value);
+        });
 
-    generatePasswordBtn.addEventListener('click', function() {
-        const strongPassword = generateVeryStrongPassword();
-        passwordInput.value = strongPassword;
-        passwordInput.type = 'text';
-        isVisible = true;
-        toggleVisibility.innerHTML = '<i class="fas fa-eye-slash"></i>';
-        updateStrengthIndicator(100); // Винаги Very Strong
-        updateFeedback(strongPassword);
-    });
+        // Generate strong password
+        generatePasswordBtn.addEventListener('click', function() {
+            const strongPassword = generateVeryStrongPassword();
+            passwordInput.value = strongPassword;
+            passwordInput.type = 'text';
+            isVisible = true;
+            toggleVisibility.innerHTML = '<i class="fas fa-eye-slash"></i>';
+            updateStrengthIndicator(100);
+            updateFeedback(strongPassword);
+        });
 
-    function analyzePassword(password) {
-        const strength = calculatePasswordStrength(password);
-        updateStrengthIndicator(strength);
-        updateFeedback(password);
-    }
-
-    function calculatePasswordStrength(password) {
-        if (!password) return 0;
-        let strength = 0;
-        if (password.length >= 8) strength += 20;
-        if (password.length >= 12) strength += 10;
-        if (/[A-Z]/.test(password)) strength += 20;
-        if (/[a-z]/.test(password)) strength += 10;
-        if (/[0-9]/.test(password)) strength += 20;
-        if (/[^A-Za-z0-9]/.test(password)) strength += 20;
-        return Math.min(strength, 100);
-    }
-
-    function updateStrengthIndicator(strength) {
-        strengthBar.style.width = strength + '%';
-        let color='#f44747', text='Very Weak';
-        if(strength<40){color='#ff6b6b';text='Weak'; passwordSuggestion.classList.remove('hidden');}
-        else if(strength<70){color='#ffbd2e';text='Medium'; passwordSuggestion.classList.add('hidden');}
-        else if(strength<90){color='#4ec9b0';text='Strong'; passwordSuggestion.classList.add('hidden');}
-        else{color='#27ca3f';text='Very Strong'; passwordSuggestion.classList.add('hidden');}
-        strengthBar.style.background=color;
-        strengthValue.textContent=text;
-        strengthValue.style.color=color;
-    }
-
-    function updateFeedback(password) {
-        const feedbackItems = feedbackList.querySelectorAll('.feedback-item');
-        feedbackItems[0].className = password.length >= 8 ? 'feedback-item valid' : 'feedback-item invalid';
-        feedbackItems[1].className = /[A-Z]/.test(password) ? 'feedback-item valid' : 'feedback-item invalid';
-        feedbackItems[2].className = /[0-9]/.test(password) ? 'feedback-item valid' : 'feedback-item invalid';
-        feedbackItems[3].className = /[^A-Za-z0-9]/.test(password) ? 'feedback-item valid' : 'feedback-item invalid';
-        const commonPasswords = ['password','123456','qwerty','letmein','welcome'];
-        feedbackItems[4].className = !commonPasswords.includes(password.toLowerCase()) ? 'feedback-item valid' : 'feedback-item invalid';
-    }
-
-    function generateVeryStrongPassword() {
-        const upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        const lower = 'abcdefghijklmnopqrstuvwxyz';
-        const numbers = '0123456789';
-        const special = '!@#$%^&*()_+-=';
-        const all = upper + lower + numbers + special;
-        let password = '';
-        // Поне един от всяка група
-        password += upper.charAt(Math.floor(Math.random()*upper.length));
-        password += lower.charAt(Math.floor(Math.random()*lower.length));
-        password += numbers.charAt(Math.floor(Math.random()*numbers.length));
-        password += special.charAt(Math.floor(Math.random()*special.length));
-        // Добавяме останалите 12 символа
-        for (let i=0;i<12;i++){
-            password += all.charAt(Math.floor(Math.random()*all.length));
+        // Analyze password strength
+        function analyzePassword(password) {
+            const strength = calculatePasswordStrength(password);
+            updateStrengthIndicator(strength);
+            updateFeedback(password);
         }
-        // Разбъркваме
-        password = password.split('').sort(()=>0.5-Math.random()).join('');
-        return password;
-    }
 
-    passwordInput.focus();
-});
+        function calculatePasswordStrength(password) {
+            if (!password) return 0;
+            let strength = 0;
+            if (password.length >= 8) strength += 20;
+            if (password.length >= 12) strength += 10;
+            if (/[A-Z]/.test(password)) strength += 20;
+            if (/[a-z]/.test(password)) strength += 10;
+            if (/[0-9]/.test(password)) strength += 20;
+            if (/[^A-Za-z0-9]/.test(password)) strength += 20;
+            return Math.min(strength, 100);
+        }
+
+        function updateStrengthIndicator(strength) {
+            strengthBar.style.width = strength + '%';
+            let color = '#f44747', text = 'Very Weak';
+            if (strength < 40) { color = '#ff6b6b'; text = 'Weak'; passwordSuggestion.classList.remove('hidden'); }
+            else if (strength < 70) { color = '#ffbd2e'; text = 'Medium'; passwordSuggestion.classList.add('hidden'); }
+            else if (strength < 90) { color = '#4ec9b0'; text = 'Strong'; passwordSuggestion.classList.add('hidden'); }
+            else { color = '#27ca3f'; text = 'Very Strong'; passwordSuggestion.classList.add('hidden'); }
+            strengthBar.style.background = color;
+            strengthValue.textContent = text;
+            strengthValue.style.color = color;
+        }
+
+        function updateFeedback(password) {
+            const feedbackItems = feedbackList.querySelectorAll('.feedback-item');
+            feedbackItems[0].className = password.length >= 8 ? 'feedback-item valid' : 'feedback-item invalid';
+            feedbackItems[1].className = /[A-Z]/.test(password) ? 'feedback-item valid' : 'feedback-item invalid';
+            feedbackItems[2].className = /[0-9]/.test(password) ? 'feedback-item valid' : 'feedback-item invalid';
+            feedbackItems[3].className = /[^A-Za-z0-9]/.test(password) ? 'feedback-item valid' : 'feedback-item invalid';
+            const commonPasswords = ['password', '123456', 'qwerty', 'letmein', 'welcome', 'admin', '123456789', '12345678', '1234', '111111'];
+            feedbackItems[4].className = !commonPasswords.includes(password.toLowerCase()) ? 'feedback-item valid' : 'feedback-item invalid';
+        }
+
+        function generateVeryStrongPassword() {
+            const upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const lower = 'abcdefghijklmnopqrstuvwxyz';
+            const numbers = '0123456789';
+            const special = '!@#$%^&*()_+-=';
+            const all = upper + lower + numbers + special;
+            let password = '';
+            password += upper.charAt(Math.floor(Math.random() * upper.length));
+            password += lower.charAt(Math.floor(Math.random() * lower.length));
+            password += numbers.charAt(Math.floor(Math.random() * numbers.length));
+            password += special.charAt(Math.floor(Math.random() * special.length));
+            for (let i = 0; i < 12; i++) {
+                password += all.charAt(Math.floor(Math.random() * all.length));
+            }
+            return password.split('').sort(() => 0.5 - Math.random()).join('');
+        }
+
+        // Cookie Modal
+        function acceptCookies() {
+            document.getElementById('cookieBanner').classList.add('hidden');
+            localStorage.setItem('cookiesAccepted', 'true');
+        }
+
+        // Check if user already accepted cookies
+        if (localStorage.getItem('cookiesAccepted') === 'true') {
+            document.getElementById('cookieBanner').classList.add('hidden');
+        }
+
+        passwordInput.focus();
+    });
 </script>
+
 </body>
 </html>
